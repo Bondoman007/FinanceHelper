@@ -35,6 +35,8 @@ export default function Login({ onLogin }) {
       <h2>
         The free Render backend may take 2-3 minutes to respond on first load
         after inactivity (free tier limitation). Subsequent loads will be fast!
+        <br></br>
+        <b>JUST CLICK ON LOGIN TO CONTINUE TO DASHBOARD ! </b>
       </h2>
       <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md my-5">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
