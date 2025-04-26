@@ -21,9 +21,17 @@ const DashboardPage = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentTransaction, setCurrentTransaction] = useState(null);
 
+  const [categoryChartData, setCategoryChartData] = useState([]);
+
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    if (transactions.length > 0 && categories.length > 0) {
+      const processed = processCategoryData();
+      setCategoryChartData(processed);
+    }
+  }, [transactions, categories]);
 
   const fetchData = async () => {
     try {
@@ -109,16 +117,20 @@ const DashboardPage = () => {
       console.error("Error saving transaction:", error);
     }
   };
-  const getCategoryWiseData = (transactions) => {
-    // Initialize an object to store category totals
-    const categoryTotals = {};
+  const processCategoryData = () => {
+    // Create a map of category colors from SYSTEM_CATEGORIES
+    const categoryColorMap = {};
+    categories.forEach((cat) => {
+      categoryColorMap[cat.name] = cat.color;
+    });
+    console.log(categoryColorMap);
 
-    // Process each transaction
-    transactions.forEach((transaction) => {
+    // Group transactions by category and sum amounts
+    const categoryTotals = transactions.reduce((acc, transaction) => {
       // Skip if not an expense or missing amount
-      if (transaction.type !== "expense" || !transaction.amount) return;
+      if (transaction.type !== "expense" || !transaction.amount) return acc;
 
-      // Get category name (handle different possible formats)
+      // Get category name (handle different formats)
       const categoryName =
         typeof transaction.category === "string"
           ? transaction.category
@@ -127,56 +139,47 @@ const DashboardPage = () => {
           : "Uncategorized";
 
       // Initialize category if not exists
-      if (!categoryTotals[categoryName]) {
-        categoryTotals[categoryName] = 0;
+      if (!acc[categoryName]) {
+        acc[categoryName] = {
+          category: {
+            name: categoryName,
+            color: categoryColorMap[categoryName] || getRandomColor(),
+          },
+          totalAmount: 0,
+        };
       }
 
-      // Add the amount (convert to number if needed)
+      // Add amount (convert to number if needed)
       const amount = Number(transaction.amount) || 0;
-      categoryTotals[categoryName] += amount;
-    });
+      acc[categoryName].totalAmount += amount;
 
-    // Convert to array of objects and sort by amount (descending)
-    const result = Object.entries(categoryTotals)
-      .map(([name, totalAmount]) => ({
-        category: name,
-        totalAmount,
-      }))
-      .sort((a, b) => b.totalAmount - a.totalAmount);
+      return acc;
+    }, {});
 
-    return result;
+    // Convert to array and sort by amount (descending)
+    return Object.values(categoryTotals).sort(
+      (a, b) => b.totalAmount - a.totalAmount
+    );
   };
 
-  const getCategoryWiseChartData = (transactions, categories = []) => {
-    // Create color map from available categories
-    const colorMap = {};
-    categories.forEach((cat) => {
-      if (cat.name) colorMap[cat.name] = cat.color;
-    });
-
-    // Get base category data
-    const categoryData = getCategoryWiseData(transactions);
-    console.log(categoryData);
-    // Add colors and reformat for chart
-    return categoryData.map((item) => ({
-      category: {
-        name: item.category,
-        color: colorMap[item.category] || getRandomColor(),
-      },
-      totalAmount: item.totalAmount,
-    }));
-  };
-
-  // Helper function for random colors
+  // Helper function to generate random colors
   const getRandomColor = () => {
-    const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+    const colors = [
+      "#A28DFF",
+      "#FF6B6B",
+      "#4ECDC4",
+      "#FF9F1C",
+      "#6A5ACD",
+      "#20B2AA",
+      "#FFA07A",
+      "#778899",
+    ];
     return colors[Math.floor(Math.random() * colors.length)];
   };
-  console.log(categoryData);
-  // Usage:
-  const chartData = getCategoryWiseChartData(transactions, categories);
-  // Usage:
-  console.log(chartData);
+
+  // Process data for chart
+
+  console.log(categoryChartData);
   // Helper function to generate random colors
 
   // Then use it in your component:
@@ -250,7 +253,7 @@ const DashboardPage = () => {
         <div className="grid gap-6 md:grid-cols-2">
           <ExpenseChart data={monthlyData} />
           {console.log(categoryData)}
-          <CategoryChart data={categoryData} />
+          <CategoryChart transactions={transactions} />
         </div>
 
         <div className="bg-white rounded-lg shadow">
