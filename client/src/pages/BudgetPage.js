@@ -35,9 +35,12 @@ const BudgetPage = () => {
 
   const fetchBudgets = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/budgets", {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        "https://financehelper-5mpy.onrender.com/api/budgets",
+        {
+          withCredentials: true,
+        }
+      );
       setBudgets(res.data);
     } catch (error) {
       console.error("Error fetching budgets:", error);
@@ -46,9 +49,12 @@ const BudgetPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/categories", {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        "https://financehelper-5mpy.onrender.com/api/categories",
+        {
+          withCredentials: true,
+        }
+      );
       setCategories(res.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -72,7 +78,7 @@ const BudgetPage = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:3000/api/budgets",
+        "https://financehelper-5mpy.onrender.com/api/budgets",
         {
           ...newBudget,
           amount: parseFloat(newBudget.amount),
@@ -95,9 +101,12 @@ const BudgetPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/budgets/${id}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `https://financehelper-5mpy.onrender.com/api/budgets/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       fetchBudgets();
     } catch (error) {
       console.error("Error deleting budget:", error);

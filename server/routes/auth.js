@@ -17,9 +17,18 @@ router.post("/login", async (req, res) => {
       throw new Error("Invalid credentials");
     } else {
       const token = await user.getJWT();
-      res.cookie("token", token, {
-        expires: new Date(Date.now() + 1 * 3600000),
-      });
+      res.cookie(
+        "token",
+        token,
+        {
+          expires: new Date(Date.now() + 1 * 3600000),
+        },
+        {
+          httpOnly: true,
+          secure: true, // cookie sent only over HTTPS
+          sameSite: "None", // if your frontend and backend are on different domains
+        }
+      );
       console.log("login done");
       res.send(user);
     }
@@ -43,9 +52,18 @@ router.post("/signup", async (req, res) => {
     });
     const saveUser = await user.save();
     const token = await saveUser.getJWT();
-    res.cookie("token", token, {
-      expires: new Date(Date.now() + 1 * 3600000),
-    });
+    res.cookie(
+      "token",
+      token,
+      {
+        expires: new Date(Date.now() + 1 * 3600000),
+      },
+      {
+        httpOnly: true,
+        secure: true, // cookie sent only over HTTPS
+        sameSite: "None", // if your frontend and backend are on different domains
+      }
+    );
     res.json({ message: "signup done!", data: saveUser });
   } catch (err) {
     res.status(400).send("ERROR:" + err.message);

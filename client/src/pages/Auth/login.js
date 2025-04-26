@@ -14,7 +14,7 @@ export default function Login({ onLogin }) {
     try {
       console.log(data);
       const response = await axios.post(
-        "http://localhost:3000/api/login",
+        "https://financehelper-5mpy.onrender.com/api/login",
         {
           emailId: data.email,
           password: data.password,

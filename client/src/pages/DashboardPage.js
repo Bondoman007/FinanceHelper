@@ -28,18 +28,24 @@ const DashboardPage = () => {
   const fetchData = async () => {
     try {
       const [txnRes, catRes, monthlyRes, categoryRes] = await Promise.all([
-        axios.get("http://localhost:3000/api/transactions", {
+        axios.get("https://financehelper-5mpy.onrender.com/api/transactions", {
           withCredentials: true,
         }),
-        axios.get("http://localhost:3000/api/categories", {
+        axios.get("https://financehelper-5mpy.onrender.com/api/categories", {
           withCredentials: true,
         }),
-        axios.get("http://localhost:3000/api/transactions/summary/monthly", {
-          withCredentials: true,
-        }),
-        axios.get("http://localhost:3000/api/transactions/summary/category", {
-          withCredentials: true,
-        }),
+        axios.get(
+          "https://financehelper-5mpy.onrender.com/api/transactions/summary/monthly",
+          {
+            withCredentials: true,
+          }
+        ),
+        axios.get(
+          "https://financehelper-5mpy.onrender.com/api/transactions/summary/category",
+          {
+            withCredentials: true,
+          }
+        ),
       ]);
 
       setTransactions(txnRes.data);
@@ -65,9 +71,12 @@ const DashboardPage = () => {
   const handleDeleteTransaction = async (id) => {
     if (window.confirm("Are you sure you want to delete this transaction?")) {
       try {
-        await axios.delete(`http://localhost:3000/api/transactions/${id}`, {
-          withCredentials: true,
-        });
+        await axios.delete(
+          `https://financehelper-5mpy.onrender.com/api/transactions/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
         fetchData();
       } catch (error) {
         console.error("Error deleting transaction:", error);
@@ -79,16 +88,20 @@ const DashboardPage = () => {
     try {
       if (currentTransaction) {
         await axios.put(
-          `http://localhost:3000/api/transactions/${currentTransaction._id}`,
+          `https://financehelper-5mpy.onrender.com/api/transactions/${currentTransaction._id}`,
           formData,
           {
             withCredentials: true,
           }
         );
       } else {
-        await axios.post("http://localhost:3000/api/transactions", formData, {
-          withCredentials: true,
-        });
+        await axios.post(
+          "https://financehelper-5mpy.onrender.com/api/transactions",
+          formData,
+          {
+            withCredentials: true,
+          }
+        );
       }
       setIsDialogOpen(false);
       fetchData();

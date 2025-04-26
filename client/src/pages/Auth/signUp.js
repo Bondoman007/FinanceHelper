@@ -15,7 +15,7 @@ export default function Signup({ onSignup }) {
     console.log(data);
     try {
       await axios.post(
-        "http://localhost:3000/api/signup",
+        "https://financehelper-5mpy.onrender.com/api/signup",
         {
           firstName: data.firstName,
           lastName: data.lastName,
