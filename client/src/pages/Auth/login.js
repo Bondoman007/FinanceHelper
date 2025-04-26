@@ -31,8 +31,12 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+      <h2>
+        The free Render backend may take 2-3 minutes to respond on first load
+        after inactivity (free tier limitation). Subsequent loads will be fast!
+      </h2>
+      <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md my-5">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
