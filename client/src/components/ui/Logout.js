@@ -7,7 +7,7 @@ export default function LogoutButton() {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/api/logout",
+        "https://financehelper-5mpy.onrender.com/api/logout",
         {},
         { withCredentials: true }
       );
