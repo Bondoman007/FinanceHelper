@@ -46,6 +46,7 @@ export default function Login({ onLogin }) {
             <input
               {...register("email", { required: "Email is required" })}
               type="email"
+              value={"nobita@gmail.com"}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
             {errors.email && (
@@ -62,6 +63,7 @@ export default function Login({ onLogin }) {
             <input
               {...register("password", { required: "Password is required" })}
               type="password"
+              value={"Nobita@123"}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
             {errors.password && (
