@@ -10,7 +10,7 @@ const app = express();
 const cookieParser = require("cookie-parser");
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://financehelper-1-7lvx.onrender.com",
     credentials: true,
   })
 );
