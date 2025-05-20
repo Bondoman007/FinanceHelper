@@ -32,12 +32,6 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-      <h2>
-        The free Render backend may take 2-3 minutes to respond on first load
-        after inactivity (free tier limitation). Subsequent loads will be fast!
-        <br></br>
-        <b>JUST CLICK ON LOGIN TO CONTINUE TO DASHBOARD ! </b>
-      </h2>
       <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md my-5">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -48,7 +42,6 @@ export default function Login({ onLogin }) {
             <input
               {...register("email", { required: "Email is required" })}
               type="email"
-              value={"nobita@gmail.com"}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
             {errors.email && (
@@ -65,7 +58,6 @@ export default function Login({ onLogin }) {
             <input
               {...register("password", { required: "Password is required" })}
               type="password"
-              value={"Nobita@123"}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
             {errors.password && (
